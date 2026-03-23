@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint client
+        run: npm run lint --workspace client
+
+      - name: Lint admin
+        run: npm run lint --workspace admin
+
+      - name: Build client
+        run: npm run build --workspace client
+        env:
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:4000/api
+
+      - name: Build admin
+        run: npm run build --workspace admin
+        env:
+          NEXT_PUBLIC_API_URL: http://127.0.0.1:4000/api
+          NEXT_PUBLIC_ADMIN_BASE_PATH: /admin
+
+      - name: Validate server entry
+        run: node --check server/src/index.js
