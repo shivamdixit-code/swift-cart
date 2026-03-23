@@ -1,7 +1,12 @@
 import axios from "axios";
 
 const ADMIN_BASE_PATH = process.env.NEXT_PUBLIC_ADMIN_BASE_PATH || "/admin";
-export const API_BASE = process.env.NEXT_PUBLIC_API_URL || `${ADMIN_BASE_PATH}/api`;
+
+export const API_BASE = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_BASE) {
+  throw new Error("NEXT_PUBLIC_API_URL is not defined");
+}
 
 export const api = axios.create({
   baseURL: API_BASE,
