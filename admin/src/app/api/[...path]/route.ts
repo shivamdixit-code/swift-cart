@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BACKEND_URL = process.env.BACKEND_API_URL || "http://127.0.0.1:4000/api";
+const BACKEND_URL = process.env.BACKEND_API_URL || "https://swift-cart-admin-omega.vercel.app/admin/login";
 
 async function handler(
   request: NextRequest,
