@@ -15,7 +15,7 @@ export default function LoginPage() {
     event.preventDefault();
     setLoading(true);
     try {
-      const response = await api.post<{ token: string }>("/auth/admin/login", { email, password });
+      const response = await api.post<{ token: string }>("/auth/login", { email, password });
       window.localStorage.setItem("swiftcart-admin-token", response.data.token);
       toast.success("Welcome back");
       router.push("/");
